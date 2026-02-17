@@ -1,8 +1,8 @@
-from JoueurHumain import JoueurHumain
-from Joueur import Joueur
-from JoueurNiveau1 import JoueurNiveauUn
-from JoueurNiveau2 import JoueurNiveauDeux
-from Configuration import Configuration
+from src.players.JoueurHumain import JoueurHumain
+from src.players.Joueur import Joueur
+from src.players.JoueurNiveau1 import JoueurNiveauUn
+from players.JoueurNiveau3 import JoueurNiveauDeux
+from interface.Configuration import Configuration
 from random import random
 
 

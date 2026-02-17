@@ -1,7 +1,9 @@
-from JoueurHumain import JoueurHumain
-from Joueur import Joueur
-from JoueurNiveau1 import JoueurNiveauUn
-from Configuration import Configuration
+from interface.Grille import Grille
+
+from src.players.Joueur import Joueur
+
+from src.players.JoueurHumain import JoueurHumain
+
 from random import random
 
 
@@ -11,7 +13,7 @@ def Partie_puissance4(Joueur1=False, Joueur2=False):
 
     Args:
         Joueur1 (bool, optional): Si True, le premier joueur est un joueur humain (JoueurHumain).
-                                  Sinon, il s'agit d'un joueur automatique (Joueur) de Niveau 1.
+                                  Sinon, il s'agit d'un joueur automatique (Joueur).
                                   Par défaut False.
         Joueur2 (bool, optional): Si True, le second joueur est un joueur humain (JoueurHumain).
                                   Sinon, il s'agit d'un joueur automatique (Joueur).
@@ -32,9 +34,9 @@ def Partie_puissance4(Joueur1=False, Joueur2=False):
             - None si la partie est toujours en cours (cas très rare ici car la boucle s'arrête).
     """
 
-    A = Configuration()
+    A = Grille()
     if Joueur1:
-        J1 = JoueurNiveauUn(A, True)
+        J1 = JoueurHumain(A, True)
     else:
         J1 = Joueur(A, True)
     if Joueur2:
@@ -76,7 +78,7 @@ def Partie_puissance4(Joueur1=False, Joueur2=False):
         raise TypeError("Votre entrée n'est pas valide")
 
 
-def puissance4_simu_2():
+def puissance4_simu():
     """
      Simule une partie de Puissance 4 entre deux joueurs.
 
@@ -92,12 +94,12 @@ def puissance4_simu_2():
             - True si le joueur avec la couleur True gagne,
             - False si le joueur avec la couleur False gagne,
             - "impossible de finir" si la grille est pleine sans gagnant,
+
     Raises:
         TypeError: Si un état invalide est rencontré dans la partie (rare).
     """
-
-    A = Configuration()
-    J1 = JoueurNiveauUn(A, True)
+    A = Grille()
+    J1 = Joueur(A, True)
     J2 = Joueur(A, False)
     beginner = random()
     if beginner < 1 / 2:
