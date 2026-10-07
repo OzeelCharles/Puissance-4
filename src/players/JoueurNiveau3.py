@@ -1,32 +1,51 @@
-from players.Joueur import Joueur
+from src.players.Joueur import Joueur
+from random import choice
 
-
-class JoueurNiveauTrois(Joueur):
-
-    def play_v2(self):
+class JoueurNiveau3(Joueur):
+    def play(self):
+        """
+        Doit jouer le coup gagnant si il existe,
+        sinon joue le coup gagnant de l'adversaire si il existe,
+        sinon regarde selon le coup adverse possible quelle coup peut amener à une victoire, 
+        Si il existe plus de deux solutions (Fourchette), on joue ce coup et s'assure une victoire
+        Si il existe une seule solution on la joue quand même en espérant
+        Si il existe que des coups qui n'amènent pas à une défaite au coup suivant on le joue
+        Sinon on joue aléatoirement
+        """
         A = self.Grille
         token = A.who_s_playing_after()
         if self.couleur != token:
             return A
-        Config_gagnante = A.est_gagnante()
-        indice = -1
-        res = None
-        reverse = []
-        while not isinstance(res, bool) and indice < 6:
+        
+        mes_victoires, victoires_adverses = A.analyse_grille(token)
+        if mes_victoires:
+            return A.add_token(mes_victoires[0], token)
+        if victoires_adverses:
+            return A.add_token(victoires_adverses[0], token)
+        
+        coups_surs = []
+        coup_fourchette = None
+
+        generateur_configs = A.copy().config_suivante(token)
+        
+        for col in range(7):
             try:
-                res = next(Config_gagnante)
-                indice += 1
-                if not isinstance(res, type(None)) and res is not token:
-                    reverse.append(indice)
+                A_sim = next(generateur_configs)
             except StopIteration:
                 break
-        if token == res:
-            return A.add_token(indice, token)
-        if reverse != []:
-            return A.add_token(
-                reverse[0], token)
-        res_counter = A.est_gagnante2()
-        for indice, _ in enumerate(range(7)):
-            if not next(res_counter):
-                return A.add_token(indice, token)
+
+            if A_sim is None: 
+                continue
+            victoires_adv_apres_mon_coup, _ = A_sim.analyse_grille(not token)
+            if not victoires_adv_apres_mon_coup:
+                coups_surs.append(col)
+                nos_victoires_futures, _ = A_sim.analyse_grille(token)
+                if len(nos_victoires_futures) >= 2:
+                    coup_fourchette = col
+                    break
+
+        if coup_fourchette is not None:
+            return A.add_token(coup_fourchette, token)
+        if coups_surs:
+            return A.add_token(choice(coups_surs), token)
         return super().play()

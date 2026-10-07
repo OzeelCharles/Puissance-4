@@ -1,14 +1,14 @@
-from interface.Configuration import Configuration
-from players.Joueur import Joueur
-from players.JoueurNiveau2 import JoueurNiveauDeux
-from players.JoueurHumain import JoueurHumain
+from src.interface.Configuration import Configuration
+from src.players.Joueur import Joueur
+from src.players.JoueurNiveau2 import JoueurNiveau2
+from src.players.JoueurHumain import JoueurHumain
 import random
 
 
 def Partie_puissance4(J1=False, J2=False):
     grille = Configuration()
     j1 = JoueurHumain(grille, True) if J1 else Joueur(grille, True)
-    j2 = JoueurHumain(grille, False) if J2 else JoueurNiveauDeux(grille, False)
+    j2 = JoueurHumain(grille, False) if J2 else JoueurNiveau2(grille, False)
     beginner = random.randint(0, 1)
     while grille.Check() is None:
         if beginner == 1:

@@ -1,7 +1,7 @@
-from interface.Configuration import Configuration
-from players.Joueur import Joueur
-from players.JoueurNiveau3 import JoueurNiveauTrois
-from players.JoueurHumain import JoueurHumain
+from src.interface.Configuration import Configuration
+from src.players.Joueur import Joueur
+from src.players.JoueurNiveau3 import JoueurNiveau3
+from src.players.JoueurHumain import JoueurHumain
 import random
 
 
@@ -9,7 +9,7 @@ def Partie_puissance4(J1=False, J2=False):
     grille = Configuration()
     j1 = JoueurHumain(grille, True) if J1 else Joueur(grille, True)
     j2 = JoueurHumain(
-        grille, False) if J2 else JoueurNiveauTrois(grille, False)
+        grille, False) if J2 else JoueurNiveau3(grille, False)
     beginner = random.randint(0, 1)
     while grille.Check() is None:
         if beginner == 1:

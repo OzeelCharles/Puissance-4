@@ -1,10 +1,11 @@
-from players.Joueur import Joueur
+from src.players.Joueur import Joueur
 
 
-class JoueurNiveauUn(Joueur):
+class JoueurNiveau1(Joueur):
     def play(self):
         """
-        Doit jouer le coup gagnant si il existe
+        Doit jouer le coup gagnant si il existe,
+        sinon joue aléatoirement
         """
 
         next_grille = None

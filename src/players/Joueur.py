@@ -1,7 +1,5 @@
 # Classe joueur artificiel#
-
-import interface.Grille as Grille
-import interface.Configuration as Configuration
+import src.interface.Configuration as Configuration
 import random
 
 
@@ -15,11 +13,10 @@ class Joueur:
         couleur (bool): La couleur du joueur (par exemple True ou False).
     """
 
-    def __init__(self, grille: Grille, couleur: bool):
+    def __init__(self, grille: Configuration, couleur: bool):
         if not isinstance(
-            grille, Grille.Grille) or not isinstance(
                 grille, Configuration.Configuration):
-            raise TypeError(f"{grille} n'est pas un objet Grille")
+            raise TypeError(f"{grille} n'est pas un objet Configuration")
         if not isinstance(couleur, bool):
             raise TypeError(f"{couleur} n'est pas de type booléen")
         self.Grille = grille

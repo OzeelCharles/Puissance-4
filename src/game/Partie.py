@@ -1,6 +1,6 @@
-from interface.Grille import Grille
-from players.Joueur import Joueur
-from players.JoueurHumain import JoueurHumain
+from src.interface.Grille import Grille
+from src.players.Joueur import Joueur
+from src.players.JoueurHumain import JoueurHumain
 import random
 
 

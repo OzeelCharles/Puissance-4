@@ -1,4 +1,4 @@
-from players.Joueur import Joueur
+from src.players.Joueur import Joueur
 
 
 class JoueurHumain(Joueur):

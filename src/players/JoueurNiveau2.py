@@ -1,8 +1,14 @@
-from players.Joueur import Joueur
+from src.players.Joueur import Joueur
 
 
-class JoueurNiveauDeux(Joueur):
+class JoueurNiveau2(Joueur):
     def play(self):
+        """
+        Doit jouer le coup gagnant si il existe,
+        sinon joue le coup gagnant de l'adversaire si il existe,
+        sinon joue aléatoirement
+        """
+        
         A = self.Grille
         token = A.who_s_playing_after()
         if self.couleur != token:

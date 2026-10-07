@@ -22,7 +22,7 @@ class Grille:
         return self.Grille == grille.Grille
 
     def copy(self):
-        cop = Grille()
+        cop = self.__class__()
         cop.Grille = copy.deepcopy(self.Grille)
         return cop
 

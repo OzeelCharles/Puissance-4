@@ -1,4 +1,4 @@
-from interface.Grille import Grille
+from src.interface.Grille import Grille
 from itertools import product
 
 
@@ -53,6 +53,24 @@ class Configuration(Grille):
             for _ in range(7):
                 yield next(config_not_token).Check()
 
+    def analyse_grille(self, token=None):
+        """Retourne (v_token, v_not_token) sous forme de listes d'indices"""
+        token = self.who_s_playing_after() if token is None else token
+        generateur = self.est_gagnante()
+        v_token = []
+        v_not_token = []
+        
+        for idx in range(7):
+            try:
+                res = next(generateur)
+                if res == token:
+                    v_token.append(idx)
+                elif res == (not token):
+                    v_not_token.append(idx)
+            except StopIteration:
+                break
+        return v_token, v_not_token
+
     def est_gagnante2(self):
         """
         Doit renvoyer un générateur qui dit si
@@ -75,6 +93,16 @@ class Configuration(Grille):
             for _ in range(7):
                 yield next(flayer).config_suivante()
         return None
+
+
+    def evaluer_plateau(self, token):
+        """
+        """
+        self_v, other_v = self.analyse_grille(token)
+        if other_v:
+            return -500
+        return len(self_v) * 10
+
 
 
 """""
