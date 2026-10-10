@@ -1,4 +1,3 @@
-# Classe joueur artificiel#
 import src.interface.Configuration as Configuration
 import random
 
@@ -29,4 +28,6 @@ class Joueur:
             val = self.Grille.Check()
             next_grille = self.Grille.add_token(
                 value, self.couleur) if val is None else self.Grille
+            if not next_grille:
+                return self.Grille
         return next_grille

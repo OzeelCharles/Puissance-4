@@ -1,4 +1,3 @@
-# Modélisation de la classe Grille#
 from itertools import product
 import copy
 
@@ -89,7 +88,9 @@ class Grille:
         if not {None}.issubset(full_condi):
             return "full"
         val = self.check_False()
-        return self.check_True() if val is None else val
+        res = self.check_True() if val is None else val
+        print(res)
+        return res
 
     def add_token(self, colonne: int, Couleur: bool):
         if colonne < 0 or colonne > 6:
@@ -114,4 +115,5 @@ class Grille:
             line -= 1
         if line < 0:
             print("Tableau plein sur cette colonne")
+            return None
         return self

@@ -60,24 +60,23 @@ class JoueurMinimax(Joueur):
             return min_eval
 
 
-    def play(self):
+def play(self):
         A = self.Grille
         my_token = A.who_s_playing_after()
         if self.couleur != my_token:
             return A
+        
         meilleur_score = -math.inf
-        meilleur_coup = 3 #On joue au centre au pire
+        meilleur_coup = None
         coups_egalites = [] 
-        
         generateur = A.config_suivante(my_token)
-        
         for col in range(7):
             try:
                 enfant = next(generateur)
                 if enfant is None: continue
-                score = self.minimax(grille=enfant, profondeur = self.profondeur_max - 1, maximisant=False,token = my_token)
-                
-                # Bonus stratégique
+                score = self.minimax(grille=enfant, profondeur = self.profondeur_max - 1, maximisant=False, token = my_token)
+                if meilleur_coup is None:
+                    meilleur_coup = col
                 if col == 3: score += 2
                 elif col in [2, 4]: score += 1
                 if score > meilleur_score:
@@ -87,6 +86,18 @@ class JoueurMinimax(Joueur):
                 elif score == meilleur_score:
                     coups_egalites.append(col)  
             except StopIteration:
-                break   
+                break     
         choix_final = choice(coups_egalites) if coups_egalites else meilleur_coup
-        return A.add_token(choix_final, my_token)
+        if choix_final is None:
+            return A
+        nouvelle_grille = A.add_token(choix_final, my_token)
+        if nouvelle_grille is None:
+            colonnes_valides = [c for c in range(7) if A.Grille[0][c] is None]
+            if colonnes_valides:
+                colonne_aleatoire = choice(colonnes_valides)
+                return A.add_token(colonne_aleatoire, my_token)
+            return A  # Si vraiment toute la grille est pleine
+            
+        return nouvelle_grille
+
+    
